@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="basic.design">
+
+	<resultMap type="com.jostens.basic.domain.Design" id="designMap">
+		<result property="designId" column="DESIGN_ID" />
+		<result property="trimCode" column="TRIM_CODE" />
+		<result property="bindingCode" column="BINDING_CODE" />
+		<result property="pageCreation" column="YEARTECH_ONLINE_SYSTEM_CODE" />
+	</resultMap>
+
+	<select id="getDesign" parameterType="java.util.HashMap" resultMap="designMap">
+		SELECT
+			jd.design_id,
+			jd.trim_code,
+			jd.binding_code,
+			jd.yeartech_online_system_code
+		FROM
+			jyba.jyba_designs jd,
+			jyba.jyba_design_sources jds
+		WHERE
+			jd.source_reference = jds.source_reference
+		AND jd.source_system_name = jds.source_system_name
+		AND jds.job_numberid = #{jobNumber}
+		AND jds.job_yearid = #{jobYear}
+	</select>
+
+</mapper>
